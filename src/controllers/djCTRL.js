@@ -82,20 +82,24 @@ let createDj = function (req, res) {
 
 
 // function to update a user given its id
-let updateUser = function (req, res) {
+let updateDj = function (req, res) {
     console.log("updateUser");
 
     // get the id from the path parameter
-    let id = req.params.id;
     let body = req.body;
     let email = body.email;
+    let id = req.params.id;
+    let name = req.params.name;
+    let description = req.params.description;
+    let zipcode = req.params.zipcode;
+  
 
     if (!email) {
         res.status(400).send("Email is Required");
         return;
     }
 
-    let sql = "update users set email where id = ?";
+    let sql = "update users set email, name, description, zipcode where id = ? values (?, ?, ?, ?)";
     let params = [email, id]
 
     db.query(sql, params, function(err, results){
